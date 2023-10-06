@@ -1,0 +1,71 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.root {
+    width: 500px;
+    overflow: hidden;
+}
+
+.columnUl {
+    width: 400px;
+    list-style: none;
+    padding: 8px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.li {
+    margin-bottom: 12px;
+}
+
+.img {
+    position: relative;
+    margin-bottom: 4px;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border: 1px solid black;
+}
+
+.credit {
+    font-size: 12px;
+    line-height: 15px;
+    text-decoration-line: underline;
+    color: #b3b3b3;
+}
+
+.image-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 30px;
+}
+
+.card-border {
+    border: 1px solid black;
+    width: 301px;
+}
+
+.feed {
+    display: grid;
+    /* show 2 in a row */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+    /* move items to the center */
+}
+
+.li {
+    justify-content: center;
+}
