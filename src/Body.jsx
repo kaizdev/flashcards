@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { createApi } from "unsplash-js";
 import PhotoComp from "./Photocomp";
 import { createClient } from "pexels";
+import { words } from "./translations";
 
 const Body = () => {
     const [data, setPhotosResponse] = useState(null);
@@ -12,31 +13,78 @@ const Body = () => {
     const searchQuery =
         "apple,ball,cat,dog,elephant,fish,grape,hat,ice,juice,kite,lion,moon,nest,owl,pig,quack,rabbit,sun,tree,umbrella,violin,water,xylophone,yarn,zebra,book,car,duck,flower";
 
+    const englishWords = words.map((word) => word.en);
+
     useEffect(() => {
-        const queryArray = searchQuery.split(",");
-        console.log(queryArray, "queryArray");
+        // const queryArray = searchQuery.split(",");
+        const queryArray = englishWords;
         const fetchPromises = queryArray.map((query) =>
-            client.photos.search({ query, per_page: 1 })
+            client.photos
+                .search({ query, per_page: 1 })
+                .catch((error) => ({ error }))
         );
 
-        Promise.all(fetchPromises)
+        Promise.allSettled(fetchPromises)
             .then((resultsArray) => {
                 const allPhotos = resultsArray.flatMap((result, index) => {
-                    const photos = Array.isArray(result.photos)
-                        ? result.photos
-                        : [result.photos];
+                    // If the promise was rejected
+                    if (result.status === "rejected") {
+                        o;
+                        console.log("Failed to fetch:", queryArray[index]);
+                        return [];
+                    }
+
+                    // Check if result.value exists
+                    if (!result.value) {
+                        console.log(
+                            "Received undefined result.value for query:",
+                            queryArray[index]
+                        );
+                        return [];
+                    }
+
+                    // Extract photos
+                    const photos = Array.isArray(result.value.photos)
+                        ? result.value.photos
+                        : [result.value.photos];
+
+                    // Check if photos are undefined or null
+                    if (
+                        !photos ||
+                        photos.some(
+                            (photo) => photo === undefined || photo === null
+                        )
+                    ) {
+                        console.log(
+                            "Received undefined or null photos for query:",
+                            queryArray[index]
+                        );
+                        return [];
+                    }
+
                     // Add query term to each photo object
                     photos.forEach(
                         (photo) => (photo.queryTerm = queryArray[index])
                     );
                     return photos;
                 });
-                setPhotosResponse(allPhotos); // This line should be here
+                setPhotosResponse(allPhotos);
             })
             .catch(() => {
-                console.log("Something went wrong!");
+                console.log("Something went really wrong!");
             });
     }, [searchQuery]);
+
+    // useEffect(() => {
+    //     client.photos
+    //         .search({ query, per_page: 3 })
+    //         .then((result) => {
+    //             setPhotosResponse(result);
+    //         })
+    //         .catch(() => {
+    //             console.log("Something went wrong!");
+    //         });
+    // }, []);
 
     console.log("data object:", data);
 
@@ -60,7 +108,7 @@ const Body = () => {
 
     const resultsArray = Array.isArray(results) ? results : [results];
 
-    console.log(data.photos, "data");
+    // console.log(data.photos, "data");
 
     if (!results) {
         return <div>No results found!</div>;
