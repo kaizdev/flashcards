@@ -1,8 +1,14 @@
-# React + Vite
+# Flashcards
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About
 
-Currently, two official plugins are available:
+An English and Chinese flashcard generator which automatically fetches images from Pexels (free image service) to create flashcards.
+At the moment, the English words and Chinese words are filled via json, because I need to find a free translation service.
+The app then maps over the english words to find the Pexels image to generate each flashcard
+In the future, users will only need to enter the english words and the app will fetch the image and the translation automatically
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
+
+-   React
+-   Vite
+-   Pexels API

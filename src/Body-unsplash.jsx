@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { createApi } from "unsplash-js";
 import PhotoComp from "./Photocomp";
+import { REACT_APP_UNSPLASH_API_KEY } from "../keys";
 
 const Body = () => {
     const [data, setPhotosResponse] = useState(null);
 
     const api = createApi({
-        // Don't forget to set your access token here!
-        // See https://unsplash.com/developers
-        accessKey: "RFBhlSKuj2pYq3wqU2Gw5obteW85ZBhXlAAO4XQuLs0",
+        accessKey: REACT_APP_UNSPLASH_API_KEY,
     });
 
     const searchTerms = "apple,ball,cat,dog,elephant";

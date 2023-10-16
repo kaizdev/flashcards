@@ -3,15 +3,14 @@ import { createApi } from "unsplash-js";
 import PhotoComp from "./Photocomp";
 import { createClient } from "pexels";
 import { words } from "./translations";
+import { REACT_APP_PEXELS_API_KEY } from "../keys";
 
 const Body = () => {
     const [data, setPhotosResponse] = useState(null);
 
-    const client = createClient(
-        "wRJ4oa9IPUP0vxi2s0D6wbSYpYsgyVBoXSNkBAqXsJNt5QU44ZYo0NTW"
-    );
-    const searchQuery =
-        "apple,ball,cat,dog,elephant,fish,grape,hat,ice,juice,kite,lion,moon,nest,owl,pig,quack,rabbit,sun,tree,umbrella,violin,water,xylophone,yarn,zebra,book,car,duck,flower";
+    const client = createClient(REACT_APP_PEXELS_API_KEY);
+    // const searchQuery =
+    //     "apple,ball,cat,dog,elephant,fish,grape,hat,ice,juice,kite,lion,moon,nest,owl,pig,quack,rabbit,sun,tree,umbrella,violin,water,xylophone,yarn,zebra,book,car,duck,flower";
 
     const englishWords = words.map((word) => word.en);
 
@@ -73,7 +72,7 @@ const Body = () => {
             .catch(() => {
                 console.log("Something went really wrong!");
             });
-    }, [searchQuery]);
+    }, []);
 
     // useEffect(() => {
     //     client.photos
